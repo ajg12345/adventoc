@@ -1,0 +1,6 @@
+I was not able to solve part 1 of this puzzle on my own and 
+resorted to seeing how WIlliam Yang did it here:
+https://www.youtube.com/watch?v=YLHPABNNgZU
+
+basically i was stuck implementing the tree with a data structure in python
+and didn't think of parsing the input at first to do a majority of the work easily
