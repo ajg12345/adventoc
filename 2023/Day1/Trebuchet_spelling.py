@@ -18,7 +18,7 @@ reverse_word_list = [number[::-1] for number in number_word_list]
 def get_first_number(s: str, word_list) -> str:
     for i in range(len(s)):
         letter = s[i]
-        if letter in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+        if letter.isnumeric():
             return letter
         else:
             for j in range(len(word_list)):
