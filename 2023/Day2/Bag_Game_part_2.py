@@ -23,17 +23,20 @@ from dataclasses import dataclass, field
 @dataclass
 class Draw:
     """describes each draw of game"""
+
     red: int = 0
     green: int = 0
     blue: int = 0
 
+
 @dataclass
 class Bag:
     """collection of draws"""
+
     draw_list: list[Draw] = field(default_factory=list)
 
     def min_required_color_power(self) -> int:
-        """ assumes there are never 0 red/blue/green in a draw """
+        """assumes there are never 0 red/blue/green in a draw"""
         min_red = 0
         min_green = 0
         min_blue = 0
@@ -43,29 +46,31 @@ class Bag:
             min_blue = max(d.blue, min_blue)
         return min_red * min_green * min_blue
 
+
 def load_draw_from_line(line: str) -> Bag:
-    draw_string = line.split(': ')[1].split('; ')
+    draw_string = line.split(": ")[1].split("; ")
     return_bag = Bag()
     for d in draw_string:
-        draws = d.split(', ')
+        draws = d.split(", ")
         new_draw = Draw()
         for color in draws:
-            if 'red' in color:
+            if "red" in color:
                 new_draw.red = int(color.split()[0])
-            if 'green' in color:
+            if "green" in color:
                 new_draw.green = int(color.split()[0])
-            if 'blue' in color:
+            if "blue" in color:
                 new_draw.blue = int(color.split()[0])
         return_bag.draw_list.append(new_draw)
     return return_bag
 
-if __name__ == '__main__':
-    input_filename = Path().absolute() / '2023' / 'Day2' / 'cube_games.txt'
+
+if __name__ == "__main__":
+    input_filename = Path().absolute() / "2023" / "Day2" / "cube_games.txt"
 
     power_sum = 0
 
     for line in input_filename.open():
         bag_game = load_draw_from_line(line)
         power_sum += bag_game.min_required_color_power()
-    
+
     print(power_sum)

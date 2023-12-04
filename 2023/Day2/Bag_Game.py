@@ -23,33 +23,34 @@ from dataclasses import dataclass
 @dataclass
 class Draw:
     """describes each draw of game"""
+
     red: int = 0
     green: int = 0
     blue: int = 0
 
     def is_not_valid(self):
-        return self.red > 12 or self.green > 13 or self.blue > 14 
+        return self.red > 12 or self.green > 13 or self.blue > 14
 
 
 def load_draw_from_line(line: str) -> list[Draw]:
-    draw_string = line.split(': ')[1].split('; ')
+    draw_string = line.split(": ")[1].split("; ")
     return_draws = []
     for d in draw_string:
-        draws = d.split(', ')
+        draws = d.split(", ")
         new_draw = Draw()
         for color in draws:
-            if 'red' in color:
+            if "red" in color:
                 new_draw.red = int(color.split()[0])
-            if 'green' in color:
+            if "green" in color:
                 new_draw.green = int(color.split()[0])
-            if 'blue' in color:
+            if "blue" in color:
                 new_draw.blue = int(color.split()[0])
         return_draws.append(new_draw)
     return return_draws
-    
 
-if __name__ == '__main__':
-    input_filename = Path().absolute() / '2023' / 'Day2' / 'cube_games.txt'
+
+if __name__ == "__main__":
+    input_filename = Path().absolute() / "2023" / "Day2" / "cube_games.txt"
 
     id_sum = 0
     id = 1
@@ -63,5 +64,5 @@ if __name__ == '__main__':
         if valid:
             id_sum += id
         id += 1
-        
+
     print(id_sum)

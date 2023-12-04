@@ -14,9 +14,10 @@ def load_schematic(schematic, filename: str):
     for line in filename.open():
         schematic.append(line)
 
+
 def get_entire_number(schematic_row: str, jpos: int, jmax: int):
     jend = 0
-    jvalue_str = ''
+    jvalue_str = ""
     for j in range(jpos, jmax):
         if schematic_row[j].isdigit():
             jvalue_str += schematic_row[j]
@@ -26,23 +27,27 @@ def get_entire_number(schematic_row: str, jpos: int, jmax: int):
     jvalue = int(jvalue_str)
     return jend, jvalue
 
+
 def check_if_symbol_near_number(schematic, istart, jstart, jend, imax, jmax):
     # generate a box of characters surrounding the number and check for any symbols anywhere within
-    for i in range(istart -1, istart + 2):
+    for i in range(istart - 1, istart + 2):
         if 0 <= i < imax:
             for j in range(jstart - 1, jend + 2):
-                if  (0 <= j < jmax):
+                if 0 <= j < jmax:
                     schematic_neighbor = schematic[i][j]
-                    if (not schematic_neighbor.isalnum()) and (schematic_neighbor not in ['.', '\n']):
+                    if (not schematic_neighbor.isalnum()) and (
+                        schematic_neighbor not in [".", "\n"]
+                    ):
                         return True
     return False
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     schematic = list()
-    input_filename = Path().absolute() / '2023' / 'Day3' / 'schematic.txt'
+    input_filename = Path().absolute() / "2023" / "Day3" / "schematic.txt"
     load_schematic(schematic, input_filename)
     imax = len(schematic)
-    jmax = len(schematic[0])-1
+    jmax = len(schematic[0]) - 1
     part_number_sum = 0
     for i in range(imax):
         j = 0
@@ -57,5 +62,5 @@ if __name__ == '__main__':
                 j = jend + 1
             else:
                 j += 1
-            
+
     print(part_number_sum)

@@ -14,13 +14,14 @@ def get_first_digit(s: str) -> str:
     for letter in s:
         if letter.isnumeric():
             return letter
-    
-if __name__ == '__main__':
-    input_filename = Path().absolute() / '2023' / 'Day1' / 'calibration_doc.txt'
+
+
+if __name__ == "__main__":
+    input_filename = Path().absolute() / "2023" / "Day1" / "calibration_doc.txt"
     running_sum = 0
     for line in input_filename.open():
         first_digit = get_first_digit(line)
         last_digit = get_first_digit(line[::-1])
-        running_sum += int(first_digit+last_digit)
+        running_sum += int(first_digit + last_digit)
 
     print(running_sum)
