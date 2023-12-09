@@ -6,12 +6,8 @@ the seeds numbers come in pairs, start and length
 
 """
 from pathlib import Path
-from functools import cache
 
 #YOU MUST ADD BLANK LINE TO END OF INPUT FILE FOR THIS TO WORK (SHORTCUT)
-
-# run the numbers backwards through this (0 -> inf) until you hit a number in the seed set, then stop
-# calculate a sorted list of number ranges based on the seed expressions to iterate through after its fully reverse mapped
 
 class Mapping:
     def __init__(self, destination_start: int, source_start: int, range_length: int):
@@ -58,7 +54,7 @@ def load_seeds(line: str) -> list():
 
 
 if __name__ == "__main__":
-    #input_filename = Path().absolute() / "2023" / "Day5" / "example_almanac.txt"
+    # input_filename = Path().absolute() / "2023" / "Day5" / "example_almanac.txt"
     input_filename = Path().absolute() / "2023" / "Day5" / "almanac.txt"
 
     seed_pairs = []
@@ -99,14 +95,15 @@ if __name__ == "__main__":
     for pair in seed_pairs:
         start = pair[0]
         stop = pair[1] + pair[0]
-        seed_pairs_processed.append((start, stop))
+        seed_pairs_processed.append((start, stop-1))
 
+    attempt_min = 9_000_000
     attempt_size = 20_283_900
-    #attempt_size = 100    # example version
+    # attempt_min = 0
+    # attempt_size = 100    # example version
 
-    sorted_pairs = sorted(seed_pairs_processed, key=lambda x: x[0])
-    final_locations = [x for x in range(10283800, attempt_size)] #possible 20283861
-    final = [x for x in range(3,10)]
+    final_locations = [x for x in range(attempt_min, attempt_size)] # possible 20283861
+    final = [x for x in range(3, 10)]
 
     #final_locations = [x for x in range(attempt_size)]  #example version
     best_minimum_location = 0
@@ -116,17 +113,16 @@ if __name__ == "__main__":
         if best_minimum_location > 0:
             break
         seed = my_almanac.map_io(location)
-        for pair in sorted_pairs:
+        for pair in seed_pairs_processed:
             if pair[0] <= seed <= pair[1]:
                 best_minimum_location = location
-                break
-            elif seed < pair[0]:
-                # no need to check further (optimization)
                 break
 
     if best_minimum_location == 0:
         print('no good location found in ' + str(attempt_size))
     else:
         print('best_minimum_location ' + str(best_minimum_location))
+
+# NOTE: I'M not sure why, but my original answer was off by 1 value so weird!
 
 
