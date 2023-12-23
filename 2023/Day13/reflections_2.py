@@ -9,6 +9,9 @@ in the final calculation
 
 not sure whats happening here, its passing all of the example
 calculations, but not the main big one...
+
+my print statements aren't working (i,j) and there's something weird about 
+the third real example...
 """
 from pathlib import Path
 from pprint import pprint
@@ -25,6 +28,19 @@ class ashRockMap:
 
         self.col_reflection_index2 = None
         self.row_reflection_index2 = None
+
+    def print_original_reflection(self) -> None:
+        if self.col_reflection_index and self.col_reflection_index > 0:
+            pprint('original reflection is col '+ str(self.col_reflection_index))
+        else:
+            pprint('original reflection is row '+ str(self.row_reflection_index))
+            
+    def print_new_reflection(self) -> None:
+        if self.col_reflection_index2 and self.col_reflection_index2 > 0:
+            pprint('new reflection is col '+ str(self.col_reflection_index2))
+        else:
+            pprint('new reflection is row '+ str(self.row_reflection_index2))
+        
 
     def check_if_found_new(self) -> bool:
         colfound = (self.col_reflection_index2 and self.col_reflection_index2 >= 0)
@@ -88,7 +104,7 @@ class ashRockMap:
     def find_row_reflection(self) -> int:
         #look for reflection in the row_ash_rock_strings
         row_max = len(self.row_ash_rock_strings)
-        for i in range(row_max):
+        for i in range(row_max-1):
             found_reflection = True
             pre_reflection_list = self.row_ash_rock_strings[i::-1]
             post_reflection_list = self.row_ash_rock_strings[i+1::]
@@ -109,7 +125,7 @@ class ashRockMap:
     def find_col_reflection(self) -> int:
         #look for reflection in the col_ash_rock_strings
         col_max = len(self.col_ash_rock_strings)
-        for i in range(col_max):
+        for i in range(col_max-1):
             found_reflection = True
             pre_reflection_list = self.col_ash_rock_strings[i::-1]
             post_reflection_list = self.col_ash_rock_strings[i+1::]
@@ -129,7 +145,7 @@ class ashRockMap:
 
 if __name__ == "__main__":
     
-    DEBUG = False
+    DEBUG = True
 
     if DEBUG:
         input_filename = Path().absolute() / "2023" / "Day13" / "example_ash_and_rocks.txt"
@@ -155,24 +171,25 @@ if __name__ == "__main__":
         pprint("checking " + str(ar_map_count))
         next_map = False
         m.find_original_reflection()
-        for i in range(len(m.ar_map)):
+        row_length = len(m.ar_map)
+        col_length = len(m.ar_map[0])
+        for i in range(row_length):
             if next_map:
                 break
-            for j in range(len(m.ar_map[0])):
+            for j in range(col_length):
                 m.switch_and_regenerate(i,j)
                 m.find_reflection()
                 if m.check_if_found_new():
                     col_100row_total += m.get_reflection_value()
                     next_map = True
                     m.switch_and_regenerate(i,j)
+                    m.print_original_reflection()
+                    m.print_new_reflection()
+                    print('i,j smudge is ' + str(i) + ',' + str(j))
+                    pprint(m.row_ash_rock_strings)
                     break
                 m.switch_and_regenerate(i,j)
-    #29268 is too low
-    #33628 is too low
 
-    pprint(ar_map_list[-1].row_ash_rock_strings)
-    pprint(ar_map_list[0].row_ash_rock_strings)
-    
     pprint('col_100row_total ' + str(col_100row_total))
     if DEBUG:
-        assert col_100row_total == 100
+        assert col_100row_total == 400
