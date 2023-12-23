@@ -1,6 +1,6 @@
 """ Problem Prompt
 PART 2
-same as before, but instead of expanding 1 row, expand 1000000 rows
+hot springs
 
 """
 from pathlib import Path
